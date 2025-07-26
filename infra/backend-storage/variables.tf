@@ -30,3 +30,7 @@ variable "tenant_id" {
 variable "service_connection_object_id" {
   type = string
 }
+
+variable "admin_object_id" {
+  type = string
+}

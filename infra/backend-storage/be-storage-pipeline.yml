@@ -11,6 +11,9 @@ parameters:
   - name: serviceConnectionObjectId
     displayName: "Azure Service Connection Object Id"
     type: string
+  - name: adminObjectId
+    displayName: "Azure Admin Object Id"
+    type: string
   - name: subscriptionId
     displayName: "Azure Subscription Id"
     type: string
@@ -45,4 +48,5 @@ steps:
         terraform init
         terraform apply -auto-approve \
           -var="service_connection_object_id=${{ parameters.serviceConnectionObjectId }}" \
+          -var="admin_object_id=${{ parameters.adminObjectId }}" \
           -var="tenant_id=$ARM_TENANT_ID"

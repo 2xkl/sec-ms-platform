@@ -32,7 +32,7 @@ module "keyvault" {
   location            = var.location
   resource_group_name = module.rg.name
   tenant_id           = var.tenant_id
-  admin_object_id     = var.service_connection_object_id
+  admin_object_id     = var.admin_object_id
 
 }
 
