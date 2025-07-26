@@ -10,15 +10,15 @@ module "rg" {
 }
 
 module "storage_account" {
-  source               = "../tf-modules/storage-account"
-  
+  source = "../tf-modules/storage-account"
+
   storage_account_name = var.storage_account_name
   resource_group_name  = module.azurerm_resource_group.rg.name
   location             = module.azurerm_resource_group.rg.location
 }
 
 module "storage_container" {
-  source                = "../tf-modules/storage-account-container"
+  source = "../tf-modules/storage-account-container"
 
   container_name        = var.container_name
   storage_account_id    = module.storage_account.id
@@ -37,7 +37,7 @@ module "keyvault" {
 }
 
 module "kv_access_policy" {
-  source = "./modules/key_vault_access_policy"
+  source = "./modules/keyvault-access-policy"
 
   key_vault_id       = module.azurerm_key_vault.kv.id
   tenant_id          = var.tenant_id
