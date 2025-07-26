@@ -33,7 +33,6 @@ module "keyvault" {
   resource_group_name = module.rg.name
   tenant_id           = var.tenant_id
   admin_object_id     = var.admin_object_id
-
 }
 
 module "kv_access_policy" {
