@@ -37,10 +37,10 @@ module "keyvault" {
 }
 
 module "kv_access_policy" {
-  source = "./modules/keyvault-access-policy"
+  source = "../tf-modules/keyvault-access-policy"
 
   key_vault_id       = module.azurerm_key_vault.kv.id
   tenant_id          = var.tenant_id
-  object_id          = var.object_id
+  object_id          = var.service_connection_object_id
   secret_permissions = ["Get", "List"]
 }
