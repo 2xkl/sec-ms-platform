@@ -13,8 +13,8 @@ module "storage_account" {
   source = "../tf-modules/storage-account"
 
   storage_account_name = var.storage_account_name
-  resource_group_name  = module.azurerm_resource_group.rg.name
-  location             = module.azurerm_resource_group.rg.location
+  resource_group_name  = module.rg.name
+  location             = module.rg.location
 }
 
 module "storage_container" {
@@ -39,7 +39,7 @@ module "keyvault" {
 module "kv_access_policy" {
   source = "../tf-modules/keyvault-access-policy"
 
-  key_vault_id       = module.azurerm_key_vault.kv.id
+  key_vault_id       = module.keyvault.id
   tenant_id          = var.tenant_id
   object_id          = var.service_connection_object_id
   secret_permissions = ["Get", "List"]
