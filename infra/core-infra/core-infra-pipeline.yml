@@ -2,7 +2,7 @@ trigger:
   - main
 
 pool:
-  name: SH
+  name: Default
   # vmImage: "ubuntu-latest"
 
 parameters:
