@@ -1,8 +1,9 @@
 trigger:
   - main
 
-# pool:
-#   vmImage: "ubuntu-latest"
+pool:
+  name: SH
+  # vmImage: "ubuntu-latest"
 
 parameters:
   - name: runApply
