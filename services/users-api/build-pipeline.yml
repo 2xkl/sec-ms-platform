@@ -1,0 +1,30 @@
+trigger:
+  - none
+  # branches:
+  #   include:
+  #     - main
+
+variables:
+  imageName: myapp
+  tag: $(Build.BuildId)
+  acrLoginServer: $(ACR_NAME).azurecr.io
+
+stages:
+  - stage: BuildAndPush
+    jobs:
+      - job: Build
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - checkout: self
+
+          - script: |
+              echo "Logging in to ACR..."
+              echo $(ACR_PASSWORD) | docker login $(acrLoginServer) -u $(ACR_USERNAME) --password-stdin
+
+              echo "Building image..."
+              docker build -t $(acrLoginServer)/$(imageName):$(tag) .
+
+              echo "Pushing image to ACR..."
+              docker push $(acrLoginServer)/$(imageName):$(tag)
+            displayName: Build and Push Docker image
