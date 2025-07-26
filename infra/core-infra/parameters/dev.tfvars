@@ -8,5 +8,6 @@ aks_node_vm_size    = "Standard_DS2_v2"
 
 acr_name = "acrwedosmpdev"
 
-
+kv_name = "strangekvtest2"
+tenant_id = "16850073-4977-4869-9163-08e8d38eac81"
 admin_object_id = "574b9bd6-0298-408d-bca2-03a6ed1ed366"
