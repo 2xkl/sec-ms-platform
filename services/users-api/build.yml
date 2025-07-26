@@ -1,8 +1,12 @@
 trigger:
-  - none
-  # branches:
-  #   include:
-  #     - main
+  - none # Manual pipeline trigger
+
+variables:
+  - group: SEC_MS_APP
+  - name: imageName
+    value: "users-api"
+  - name: tag
+    value: "$(Build.BuildId)"
 
 pool:
   name: Default
@@ -11,20 +15,25 @@ steps:
   - checkout: self
 
   - task: Bash@3
-    displayName: "Build app"
+    displayName: "Build Maven app"
     inputs:
       targetType: "inline"
       workingDirectory: services/users-api
       script: |
+        chmod +x ./mvnw
         ./mvnw clean package -DskipTests
 
+  - task: Bash@3
+    displayName: "Build and Push Docker image"
+    inputs:
+      targetType: "inline"
+      workingDirectory: services/users-api
+      script: |
+        echo "Logging in to ACR..."
+        echo $(ACR_PASSWORD) | docker login $(ACR_LOGIN_SERVER) -u $(ACR_USERNAME) --password-stdin
 
-# ./mvnw clean package -DskipTests
-  # - task: Maven@3
-  #   inputs:
-  #     mavenPomFile: 'pom.xml'
-  #     goals: 'clean package'
-  #     javaHomeOption: 'JDKVersion'
-  #     jdkVersionOption: '1.11'
-  #     publishJUnitResults: true
-  #     testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        echo "Building Docker image..."
+        docker build -t $(ACR_LOGIN_SERVER)/$(imageName):$(tag) .
+
+        echo "Pushing image..."
+        docker push $(ACR_LOGIN_SERVER)/$(imageName):$(tag)
