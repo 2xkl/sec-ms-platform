@@ -30,10 +30,10 @@ steps:
       workingDirectory: services/users-api
       script: |
         echo "Logging in to ACR..."
-        echo $(ACR_PASSWORD) | docker login $(ACR_LOGIN_SERVER) -u $(ACR_USERNAME) -p $(ACR_PASSWORD)
+        echo $(ACR_PASSWORD) | sudo docker login $(ACR_LOGIN_SERVER) -u $(ACR_USERNAME) -p $(ACR_PASSWORD)
 
         echo "Building Docker image..."
-        docker build -t $(ACR_LOGIN_SERVER)/$(imageName):$(tag) .
+        sudo docker build -t $(ACR_LOGIN_SERVER)/$(imageName):$(tag) .
 
         echo "Pushing image..."
-        docker push $(ACR_LOGIN_SERVER)/$(imageName):$(tag)
+        sudo docker push $(ACR_LOGIN_SERVER)/$(imageName):$(tag)
