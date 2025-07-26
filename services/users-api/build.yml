@@ -10,11 +10,21 @@ pool:
 steps:
   - checkout: self
 
-  - task: Maven@3
+  - task: Bash@3
+    displayName: "Build app"
     inputs:
-      mavenPomFile: 'pom.xml'
-      goals: 'clean package'
-      javaHomeOption: 'JDKVersion'
-      jdkVersionOption: '1.11'
-      publishJUnitResults: true
-      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      targetType: "inline"
+      workingDirectory: services/users-api
+      script: |
+        ./mvnw clean package -DskipTests
+
+
+# ./mvnw clean package -DskipTests
+  # - task: Maven@3
+  #   inputs:
+  #     mavenPomFile: 'pom.xml'
+  #     goals: 'clean package'
+  #     javaHomeOption: 'JDKVersion'
+  #     jdkVersionOption: '1.11'
+  #     publishJUnitResults: true
+  #     testResultsFiles: '**/surefire-reports/TEST-*.xml'
