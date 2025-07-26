@@ -28,27 +28,10 @@ module "storage_container" {
 module "keyvault" {
   source = "../tf-modules/keyvault"
 
-  name                = var.key_vault_name
-  location            = var.location
-  resource_group_name = module.rg.name
-  tenant_id           = var.tenant_id
-  admin_object_id     = var.admin_object_id
-}
-
-module "kv_access_policy" {
-  source = "../tf-modules/keyvault-access-policy"
-
-  key_vault_id       = module.keyvault.id
-  tenant_id          = var.tenant_id
-  object_id          = var.service_connection_object_id
-  secret_permissions = ["Get", "List"]
-}
-
-module "kv_access_policy_admin" {
-  source = "../tf-modules/keyvault-access-policy"
-
-  key_vault_id       = module.keyvault.id
-  tenant_id          = var.tenant_id
-  object_id          = var.admin_object_id
-  secret_permissions = ["Get", "List", "Set"]
+  name                         = var.key_vault_name
+  location                     = var.location
+  resource_group_name          = module.rg.name
+  tenant_id                    = var.tenant_id
+  admin_object_id              = var.admin_object_id
+  service_connection_object_id = var.service_connection_object_id
 }

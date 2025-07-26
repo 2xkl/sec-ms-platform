@@ -2,6 +2,7 @@ utils
 https://aex.dev.azure.com/me
 
 1 
+Run local backend-storage or
 Run pipeline be-storage-pipeline.yml that will provision
 - storage for tfstates
 - keyvault for service principal details
