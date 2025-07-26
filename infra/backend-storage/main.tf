@@ -43,3 +43,12 @@ module "kv_access_policy" {
   object_id          = var.service_connection_object_id
   secret_permissions = ["Get", "List"]
 }
+
+module "kv_access_policy_admin" {
+  source = "../tf-modules/keyvault-access-policy"
+
+  key_vault_id       = module.keyvault.id
+  tenant_id          = var.tenant_id
+  object_id          = var.admin_object_id
+  secret_permissions = ["Get", "List", "Set"]
+}
