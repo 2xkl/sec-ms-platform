@@ -2,18 +2,18 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: users-api-ingress
-  namespace: default  # Ensure you specify the correct namespace
+  namespace: default
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: users-api.local  # The hostname you want to use
+  - host: users-api.local
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: users  # Service name
+            name: users
             port:
-              number: 80   # The service port
+              number: 8080  # Correct port for your service
