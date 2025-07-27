@@ -21,3 +21,40 @@ spec:
         - containerPort: 8080
       imagePullSecrets:
       - name: acr-secret
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: users
+spec:
+  selector:
+    app: users
+  ports:
+    - protocol: TCP
+      port: 80          # Exposed port to be accessed externally
+      targetPort: 8080   # Container's internal port
+  type: NodePort
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: users-api-ingress
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: users-api.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: users
+            port:
+              number: 80  # Matches the service's exposed port
