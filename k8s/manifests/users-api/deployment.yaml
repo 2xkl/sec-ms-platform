@@ -5,7 +5,7 @@ metadata:
   labels:
     app: users
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: users
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: users-api
-        image: acrwedosmpdev.azurecr.io/users-api:13
+        image: acrwedosmpdev.azurecr.io/users-api:14
         ports:
         - containerPort: 8080
       imagePullSecrets:
