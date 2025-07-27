@@ -43,3 +43,5 @@ service_connection_object_id
 X.
 
 fix access policies
+
+argocd app create users-api   --repo https://github.com/2xkl/sec-ms-platform   --path k8s/manifests/users-api   --dest-server https://kubernetes.default.svc   --dest-namespace default   --revision f/infra_cleanup 
