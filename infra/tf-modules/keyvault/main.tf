@@ -20,7 +20,7 @@ resource "azurerm_key_vault" "akv" {
     tenant_id = var.tenant_id
     object_id = var.service_connection_object_id
 
-    secret_permissions      = ["Get", "List"]
+    secret_permissions = ["Get", "List"]
   }
 
   tags = var.tags
