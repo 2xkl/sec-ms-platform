@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: users-api
+  namespace: argocd
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  source:
+    repoURL: https://github.com/2xkl/sec-ms-platform
+    path: k8s/manifests/users-api
+    targetRevision: f/infra_cleanup
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncWindow: null

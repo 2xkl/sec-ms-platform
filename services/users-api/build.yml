@@ -1,5 +1,5 @@
 trigger:
-  - none # Manual pipeline trigger
+  - none
 
 variables:
   - group: SEC_MS_APP

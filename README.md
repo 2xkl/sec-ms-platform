@@ -31,13 +31,31 @@ az keyvault secret set --vault-name keyvault --name ARMACCESSKEY --value ""
 
 Setup storage for terraform state
 
-
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 
 provision tenant id
 provision subscription id
 service_connection_object_id
 
 +
+
+argocd handler
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+
+
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update
+
+helm install nginx-ingress ingress-nginx/ingress-nginx \
+  --create-namespace \
+  --namespace ingress-nginx
+
+
+
+exprt kubeconfiga do taksa na azure devops self hosted agent
 
 
 X.
