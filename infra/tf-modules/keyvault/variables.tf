@@ -19,6 +19,10 @@ variable "admin_object_id" {
   type        = string
 }
 
+variable "service_connection_object_id" {
+  type = string
+}
+
 variable "sku_name" {
   type    = string
   default = "standard"

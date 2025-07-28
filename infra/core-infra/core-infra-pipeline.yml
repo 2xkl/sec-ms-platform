@@ -2,7 +2,8 @@ trigger:
   - main
 
 pool:
-  vmImage: "ubuntu-latest"
+  name: Default
+  # vmImage: "ubuntu-latest"
 
 parameters:
   - name: runApply
@@ -11,6 +12,7 @@ parameters:
     default: false
 
 variables:
+  - group: SEC_MS
   - name: TF_VERSION
     value: "1.7.5"
 
@@ -32,12 +34,12 @@ stages:
                 sudo mv terraform /usr/local/bin/
                 terraform version
 
-          - task: AzureKeyVault@2
-            name: FetchSecrets
-            inputs:
-              azureSubscription: "DEV Platform Integration"
-              KeyVaultName: "strangekvtest"
-              SecretsFilter: "*"
+          # - task: AzureKeyVault@2
+          #   name: FetchSecrets
+          #   inputs:
+          #     azureSubscription: "DEV Platform Integration"
+          #     KeyVaultName: "strangekvtest"
+          #     SecretsFilter: "*"
 
           - task: Bash@3
             displayName: "Terraform Init & Plan (Dev)"
@@ -46,8 +48,8 @@ stages:
               workingDirectory: infra/core-infra
               script: |
                 terraform init -reconfigure \
-                  -backend-config="resource_group_name=devops-test-sec-rg" \
-                  -backend-config="storage_account_name=devopsjlk213" \
+                  -backend-config="resource_group_name=devops-test-sec2-rg" \
+                  -backend-config="storage_account_name=devopsjlk2132" \
                   -backend-config="container_name=tfstate" \
                   -backend-config="key=core-infra.dev.terraform.tfstate"
                 terraform plan -var-file="parameters/dev.tfvars" -out=dev-tfplan

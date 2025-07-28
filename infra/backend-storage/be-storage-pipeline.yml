@@ -1,5 +1,5 @@
 trigger:
-  - main
+  - none
 
 pool:
   vmImage: "ubuntu-latest"
@@ -8,12 +8,15 @@ parameters:
   - name: serviceConnection
     displayName: "Azure Service Connection"
     type: string
+  - name: serviceConnectionObjectId
+    displayName: "Azure Service Connection Object Id"
+    type: string
+  - name: adminObjectId
+    displayName: "Azure Admin Object Id"
+    type: string
   - name: subscriptionId
     displayName: "Azure Subscription Id"
     type: string
-  # - name: tenantId
-  #   displayName: "Azure Tenant Id"
-  #   type: string
 
 variables:
   TF_VERSION: "1.7.5"
@@ -36,11 +39,14 @@ steps:
       azureSubscription: "${{ parameters.serviceConnection }}"
       scriptType: "bash"
       scriptLocation: "inlineScript"
+      workingDirectory: infra/backend-storage
       inlineScript: |
         az account set --subscription "${{ parameters.subscriptionId }}"
         export ARM_SUBSCRIPTION_ID=$(az account show --query id -o tsv)
         export ARM_TENANT_ID=$(az account show --query tenantId -o tsv)
         export ARM_USE_OIDC=true
-        cd infra/backend-storage
         terraform init
-        terraform apply -auto-approve
+        terraform apply -auto-approve \
+          -var="service_connection_object_id=${{ parameters.serviceConnectionObjectId }}" \
+          -var="admin_object_id=${{ parameters.adminObjectId }}" \
+          -var="tenant_id=$ARM_TENANT_ID"

@@ -1,0 +1,4 @@
+*tfplan
+*lock.hcl
+.terraform
+target

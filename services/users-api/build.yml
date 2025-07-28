@@ -1,0 +1,39 @@
+trigger:
+  - none
+
+variables:
+  - group: SEC_MS_APP
+  - name: imageName
+    value: "users-api"
+  - name: tag
+    value: "$(Build.BuildId)"
+
+pool:
+  name: Default
+
+steps:
+  - checkout: self
+
+  - task: Bash@3
+    displayName: "Build Maven app"
+    inputs:
+      targetType: "inline"
+      workingDirectory: services/users-api
+      script: |
+        chmod +x ./mvnw
+        ./mvnw clean package -DskipTests
+
+  - task: Bash@3
+    displayName: "Build and Push Docker image"
+    inputs:
+      targetType: "inline"
+      workingDirectory: services/users-api
+      script: |
+        echo "Logging in to ACR..."
+        echo $(ACR_PASSWORD) | sudo docker login $(ACR_LOGIN_SERVER) -u $(ACR_USERNAME) -p $(ACR_PASSWORD)
+
+        echo "Building Docker image..."
+        sudo docker build -t $(ACR_LOGIN_SERVER)/$(imageName):$(tag) .
+
+        echo "Pushing image..."
+        sudo docker push $(ACR_LOGIN_SERVER)/$(imageName):$(tag)
